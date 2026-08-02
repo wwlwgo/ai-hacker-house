@@ -45,9 +45,8 @@ with sync_playwright() as playwright:
     page.get_by_role("button", name="总监批准并生成报告").click()
     expect_status(page, "REPORT_DRAFTED")
     expect(page.get_by_text("Markdown 报告草稿", exact=True)).to_be_visible()
-    expect(page.get_by_text("已确认事实", exact=True)).to_be_visible()
-    expect(page.get_by_text("总监已确认的拟定结论", exact=True)).to_be_visible()
-    expect(page.get_by_text("证据引用", exact=True)).to_be_visible()
+    expect(page.get_by_text("报告来源：", exact=False)).to_be_visible()
+    expect(page.get_by_text("sc-pipe-001", exact=False).last).to_be_visible()
     page.screenshot(path="/tmp/agent-relay-acceptance.png", full_page=True)
 
     page.get_by_role("button", name="重置案例").click()

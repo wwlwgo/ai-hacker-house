@@ -32,7 +32,7 @@ ROLE_LABELS = {
 
 def get_relay() -> Relay:
     if "relay" not in st.session_state:
-        st.session_state.relay = Relay(FIXTURE)
+        st.session_state.relay = Relay(FIXTURE, enable_live_llm=True)
     return st.session_state.relay
 
 
@@ -75,7 +75,7 @@ def message_summary(message) -> str:
     if "proposed_conclusion" in payload:
         return payload["proposed_conclusion"]
     if "title" in payload:
-        return "已生成 {0} 格式报告草稿".format(payload["format"])
+        return "已生成 {0} 格式报告草稿（{1}）".format(payload["format"], payload.get("source", "未知来源"))
     return "已记录结构化消息"
 
 
@@ -212,6 +212,10 @@ with evidence_column:
     if case.report_draft:
         st.divider()
         st.markdown("#### Markdown 报告草稿")
+        if case.report_source == "真实 LLM":
+            st.success("报告来源：真实 LLM。Report Agent 仅接收已批准结论包。")
+        else:
+            st.info("报告来源：Mock 回退。{0}".format(case.report_fallback_reason or "未使用真实 LLM。"))
         if st.button("重新演示", key="reset_from_report", use_container_width=True):
             run_action(relay, relay.reset_case)
         st.markdown(case.report_draft)

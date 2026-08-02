@@ -49,4 +49,6 @@ class RelayCase:
     messages: List[Message] = field(default_factory=list)
     proposed_conclusion: Optional[Dict[str, Any]] = None
     report_draft: Optional[str] = None
+    report_source: Optional[str] = None
+    report_fallback_reason: Optional[str] = None
     started_at: datetime = field(default_factory=lambda: datetime.fromisoformat("2026-08-02T12:00:00+08:00"))

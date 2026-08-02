@@ -6,6 +6,7 @@ from typing import Any, Dict, List
 from src.relay.mock_nodes import SPECIALIST_ROLES, reconcile, specialist_evidence
 from src.relay.models import Actor, CaseStatus, Message, RelayCase
 from src.reporting.draft import render_markdown_report
+from src.reporting.llm import build_approved_report_package, load_local_env, request_deepseek_report
 
 
 class RelayStateError(RuntimeError):
@@ -13,8 +14,9 @@ class RelayStateError(RuntimeError):
 
 
 class Relay:
-    def __init__(self, fixture_path: Path):
+    def __init__(self, fixture_path: Path, enable_live_llm: bool = False):
         self.fixture_path = Path(fixture_path)
+        self.enable_live_llm = enable_live_llm
         self.case = None
         self.reset_case()
 
@@ -145,17 +147,39 @@ class Relay:
 
     def generate_report(self) -> str:
         self._require_status(CaseStatus.APPROVED, "Report generation requires director approval")
-        self.case.report_draft = render_markdown_report(
+        package = build_approved_report_package(
             self.case.trace_id,
             self.case.title,
             self.case.proposed_conclusion,
         )
+        fallback_draft = render_markdown_report(
+            self.case.trace_id,
+            self.case.title,
+            self.case.proposed_conclusion,
+        )
+        if not self.enable_live_llm:
+            self.case.report_draft = fallback_draft
+            self.case.report_source = "Mock 回退"
+            self.case.report_fallback_reason = "当前运行配置未启用真实 LLM。"
+            report_adapter = "mock_fallback"
+        else:
+            load_local_env(self.fixture_path.parent.parent.parent / ".env")
+            try:
+                self.case.report_draft = request_deepseek_report(package)
+                self.case.report_source = "真实 LLM"
+                self.case.report_fallback_reason = None
+                report_adapter = "deepseek_api"
+            except RuntimeError as error:
+                self.case.report_draft = fallback_draft
+                self.case.report_source = "Mock 回退"
+                self.case.report_fallback_reason = str(error)
+                report_adapter = "mock_fallback"
         self._append_message(
             round_number=2,
-            sender=Actor("report_agent", "mock"),
+            sender=Actor("report_agent", report_adapter),
             receiver=Actor("director_human", "human_adapter"),
             event_type="report.drafted",
-            payload={"title": self.case.title, "format": "markdown"},
+            payload={"title": self.case.title, "format": "markdown", "source": self.case.report_source},
             evidence_refs=list(self.case.proposed_conclusion["evidence_refs"]),
             requires_human_approval=False,
         )
