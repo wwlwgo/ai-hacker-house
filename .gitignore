@@ -15,6 +15,7 @@ private-inbox/
 # Secrets and local configuration
 .env
 .env.*
+github-token.txt
 config.local.*
 *.pem
 *.key
