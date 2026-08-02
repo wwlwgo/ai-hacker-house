@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local and generated data
+data/
+private-inbox/
+*.db
+*.sqlite
+*.sqlite3
+*.jsonl
+
+# Secrets and local configuration
+.env
+.env.*
+config.local.*
+*.pem
+*.key
+
+# Editor and operating system files
+.DS_Store
+.vscode/
+.idea/
+
+# Generated demo output
+output/

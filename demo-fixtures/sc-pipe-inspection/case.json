@@ -1,0 +1,45 @@
+{
+  "fixture_notice": "全部字段为脱敏演示数据，不对应真实项目、人员或技术标准。",
+  "trace_id": "sc-pipe-001",
+  "title": "现场管材壁厚专项核查",
+  "initial_issue": {
+    "summary": "发起方对一张现场照片中的管材壁厚提出质疑，要求核对对象、实测情况和适用依据。",
+    "evidence_refs": ["ev-photo-description-01"],
+    "requires_human_approval": true
+  },
+  "specialist_responses": {
+    "integrated_monitoring": {
+      "round_1": {
+        "claim": "已取得模拟测量记录，但照片对象类型仍需确认。",
+        "evidence_refs": ["ev-measurement-01", "ev-integrated-clause-01"],
+        "confidence": "medium"
+      },
+      "round_2": {
+        "claim": "补充对象识别记录和适用依据后，可形成专业建议。",
+        "evidence_refs": ["ev-object-confirmation-01", "ev-measurement-01", "ev-integrated-clause-01"],
+        "confidence": "high"
+      }
+    },
+    "communications": {
+      "round_1": {
+        "claim": "模拟抽检台账显示待核查点位需结合对象类型解释。",
+        "evidence_refs": ["ev-communications-check-01", "ev-communications-clause-01"],
+        "confidence": "medium"
+      },
+      "round_2": {
+        "claim": "补充对象识别后，专业台账和依据可与另一专业结论对照。",
+        "evidence_refs": ["ev-object-confirmation-01", "ev-communications-check-01", "ev-communications-clause-01"],
+        "confidence": "high"
+      }
+    }
+  },
+  "human_correction": {
+    "event_type": "human.correction",
+    "summary": "当前照片对象类型尚未确认；请暂停以该照片直接形成最终判断，并补充对象识别与适用依据。",
+    "effect": "pause_and_recheck"
+  },
+  "expected_outcome": {
+    "status_before_human_approval": "HUMAN_CONFIRMATION",
+    "report_generation_rule": "只有 human.approval 后才允许生成报告草稿。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "fixture_notice": "全部字段为脱敏演示数据，不对应真实项目、人员、作业面、安全标准或报送要求。",
+  "trace_id": "safety-daily-001",
+  "title": "安全日报事实合并与多口径输出",
+  "source_report": {
+    "event_type": "daily_report.submitted",
+    "summary": "施工方提交模拟的当日作业摘要、人员信息和现场照片说明。",
+    "evidence_refs": ["ev-contractor-summary-01", "ev-site-photo-description-01"]
+  },
+  "independent_inspection": {
+    "event_type": "inspection.submitted",
+    "summary": "安全专监提交模拟巡检记录，指出同一作业面存在需要跟踪的问题。",
+    "evidence_refs": ["ev-safety-inspection-01", "ev-correction-photo-description-01"]
+  },
+  "relay_check": {
+    "event_type": "discrepancy.detected",
+    "summary": "来源日报未覆盖巡检发现的问题，Relay 请求人工确认处置级别。",
+    "requires_human_approval": true
+  },
+  "human_classification": {
+    "event_type": "human.classification",
+    "summary": "演示中由授权人工节点确定问题是否进入后续跟踪；该决定不由 Agent 自动作出。"
+  },
+  "outputs": [
+    "沟通版安全日报草稿",
+    "归档版安全日志草稿"
+  ]
+}

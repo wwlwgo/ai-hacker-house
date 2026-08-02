@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>工程协同 Agent Relay</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #17212b;
+        --muted: #62707d;
+        --paper: #f5f7f8;
+        --panel: #ffffff;
+        --line: #cbd5dc;
+        --accent: #0d6b75;
+        --badge: #dceef0;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      main {
+        width: min(960px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 56px 0;
+      }
+
+      header {
+        border-left: 6px solid var(--accent);
+        padding-left: 18px;
+        margin-bottom: 28px;
+      }
+
+      h1 { margin: 0; font-size: 32px; line-height: 1.2; }
+      p { margin: 10px 0 0; color: var(--muted); line-height: 1.7; }
+
+      section {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .item {
+        min-height: 112px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--panel);
+        padding: 18px;
+      }
+
+      .label { display: block; color: var(--muted); font-size: 13px; }
+      .value { display: block; margin-top: 10px; font-size: 18px; font-weight: 700; }
+      .mock { color: var(--accent); }
+
+      @media (max-width: 680px) {
+        main { padding: 32px 0; }
+        h1 { font-size: 26px; }
+        section { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>工程协同 Agent Relay</h1>
+        <p>本地协同指挥台的最小启动页。后续将用于演示受控的跨角色信息流转。</p>
+      </header>
+      <section aria-label="MVP 环境状态">
+        <article class="item">
+          <span class="label">演示事项</span>
+          <span class="value">SC 管壁厚专项核查</span>
+        </article>
+        <article class="item">
+          <span class="label">运行方式</span>
+          <span class="value">本地静态页面</span>
+        </article>
+        <article class="item">
+          <span class="label">数据边界</span>
+          <span class="value mock">Mock nodes / anonymized demo data</span>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
