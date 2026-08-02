@@ -32,7 +32,7 @@ with sync_playwright() as playwright:
     page.get_by_role("button", name="运行 Round 2", exact=True).click()
     wait_for_status(page, "HUMAN_CONFIRMATION")
     expect(page.get_by_text("拟定结论", exact=True)).to_be_visible()
-    expect(page.get_by_text("待人工确认", exact=False).first).to_be_visible()
+    expect(page.get_by_text("人工裁决", exact=False).first).to_be_visible()
 
     page.get_by_role("button", name="总监批准并生成报告", exact=True).click()
     wait_for_status(page, "REPORT_DRAFTED")

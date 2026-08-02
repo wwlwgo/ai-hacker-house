@@ -38,6 +38,40 @@
     "summary": "当前照片对象类型尚未确认；请暂停以该照片直接形成最终判断，并补充对象识别与适用依据。",
     "effect": "pause_and_recheck"
   },
+  "next_iteration_design": {
+    "notice": "以下为下一轮多轮协同 Demo 的虚构脱敏设计。所有角色、证据编号、描述和结论均不对应真实项目。",
+    "design_goal": "展示受控的分歧、追问、跨专业核对与总监裁决，而不是让 Agent 自由闲聊。",
+    "message_contract": {
+      "required_fields": ["event_type", "sender", "receiver", "round", "summary", "evidence_refs", "requires_human_control"],
+      "peer_exchange_rule": "专业角色之间的消息必须经 Relay 转发和记录，不能绕过 trace_id 形成私聊。"
+    },
+    "message_storyboard": [
+      {"sequence": 1, "event_type": "issue.created", "sender": "owner", "receiver": "relay", "round": 0, "summary": "发起方提出：请核对现场照片所示管材对象、可用测量记录及适用依据；照片本身不视为结论。", "evidence_refs": ["ev-photo-description-01"], "requires_human_control": true},
+      {"sequence": 2, "event_type": "directive.issued", "sender": "director_human", "receiver": "relay", "round": 0, "summary": "总监要求两个专业分别说明对象识别、证据来源和适用范围，不得以单张照片直接判断。", "evidence_refs": ["ev-directive-summary-01"], "requires_human_control": true},
+      {"sequence": 3, "event_type": "claim.submitted", "sender": "integrated_monitoring", "receiver": "relay", "round": 1, "summary": "综合监控初判：已有模拟测量记录，但照片对象尚不能仅凭外观确认；该判断只作为待核实线索。", "evidence_refs": ["ev-measurement-01", "ev-integrated-clause-01"], "requires_human_control": false},
+      {"sequence": 4, "event_type": "claim.submitted", "sender": "communications", "receiver": "relay", "round": 1, "summary": "通信专业初判：模拟台账可说明本专业核查范围，但不能据此证明照片对象就是对应管材。", "evidence_refs": ["ev-communications-check-01", "ev-communications-clause-01"], "requires_human_control": false},
+      {"sequence": 5, "event_type": "challenge.raised", "sender": "communications", "receiver": "relay", "round": 1, "summary": "通信专业质疑：测量记录与照片对象之间尚缺少可追溯关联，不能直接采纳为照片所示对象的结论。", "evidence_refs": ["ev-communications-check-01"], "requires_human_control": false},
+      {"sequence": 6, "event_type": "human.correction", "sender": "director_human", "receiver": "relay", "round": 1, "summary": "总监裁定第一轮不形成最终判断：照片对象识别、测量样本对应关系和依据适用范围必须分别补齐。", "evidence_refs": [], "requires_human_control": true},
+      {"sequence": 7, "event_type": "cross_check.requested", "sender": "integrated_monitoring", "receiver": "communications", "transport": "relay_mediated", "round": 2, "summary": "综合监控经 Relay 请求通信专业交叉核对：其台账是否能确认测量样本与照片对象的关系；不能确认时须明确边界。", "evidence_refs": ["ev-measurement-01", "ev-object-confirmation-01"], "requires_human_control": false},
+      {"sequence": 8, "event_type": "cross_check.responded", "sender": "communications", "receiver": "integrated_monitoring", "transport": "relay_mediated", "round": 2, "summary": "通信专业经 Relay 回复：台账只能支持本专业核查范围；对象关联须以独立的模拟对象识别记录为准。", "evidence_refs": ["ev-communications-check-01", "ev-object-confirmation-01"], "requires_human_control": false},
+      {"sequence": 9, "event_type": "evidence.supplemented", "sender": "integrated_monitoring", "receiver": "relay", "round": 2, "summary": "综合监控补充：对象识别记录、测量记录和专业依据可分别追溯；照片外观仍不单独承担结论。", "evidence_refs": ["ev-object-confirmation-01", "ev-measurement-01", "ev-integrated-clause-01"], "requires_human_control": false},
+      {"sequence": 10, "event_type": "human.approval", "sender": "director_human", "receiver": "relay", "round": 2, "summary": "总监完成裁决并批准：只将已采纳的对象识别、可追溯测量和适用依据送入报告结论包；已排除和待补充内容保留在审计链。", "evidence_refs": ["ev-object-confirmation-01", "ev-measurement-01", "ev-integrated-clause-01", "ev-communications-check-01"], "requires_human_control": true}
+    ],
+    "decision_ledger": [
+      {"decision_item": "照片外观可单独证明管材对象及壁厚", "source": ["integrated_monitoring.round_1"], "status": "rejected", "director_rationale": "单张脱敏照片缺少对象、取样和测量关系，不能单独承担技术结论。", "evidence_refs": ["ev-photo-description-01"]},
+      {"decision_item": "对象识别记录可作为对象判断依据", "source": ["integrated_monitoring.round_2", "communications.cross_check"], "status": "adopted", "director_rationale": "两个专业均明确对象判断应以独立识别记录为准，且其适用边界可追溯。", "evidence_refs": ["ev-object-confirmation-01"]},
+      {"decision_item": "模拟测量记录可作为已识别对象的测量佐证", "source": ["integrated_monitoring.round_1", "integrated_monitoring.round_2"], "status": "adopted", "director_rationale": "仅与对象识别记录和专业依据组合使用，不扩展为照片外观结论。", "evidence_refs": ["ev-measurement-01", "ev-integrated-clause-01"]},
+      {"decision_item": "通信专业台账可证明照片对象与测量样本一一对应", "source": ["communications.round_1"], "status": "rejected", "director_rationale": "通信专业已明确该台账只说明本专业核查范围，不能承担跨专业对象关联。", "evidence_refs": ["ev-communications-check-01"]},
+      {"decision_item": "后续正式交付前补充完整原始佐证材料", "source": ["director_human"], "status": "pending", "director_rationale": "本 Demo 仅使用脱敏证据引用；正式流程仍须由人工复核原始材料。", "evidence_refs": []}
+    ],
+    "approved_conclusion_package": {
+      "inclusion_rule": "只包含 decision_ledger 中 status 为 adopted 的条目。",
+      "approved_facts": ["对象判断以独立的模拟对象识别记录为准，不以照片外观单独判断。", "模拟测量记录仅作为已识别对象的佐证，并与模拟专业依据共同引用。"],
+      "evidence_refs": ["ev-object-confirmation-01", "ev-measurement-01", "ev-integrated-clause-01"],
+      "approved_conclusion": "上述已采纳事实已形成待总监批准的内部演示结论包；批准后方可用于报告草稿，不构成正式工程结论或对外交付。"
+    },
+    "llm_exclusion_rules": ["完整消息时间线及其 payload", "decision_ledger 中 status 为 rejected 的条目", "decision_ledger 中 status 为 pending 的条目", "人工纠偏前的初步判断、质疑内容及未确认材料", "任何原始聊天截图、真实照片、人员或项目识别信息"]
+  },
   "expected_outcome": {
     "status_before_human_approval": "HUMAN_CONFIRMATION",
     "report_generation_rule": "只有 human.approval 后才允许生成报告草稿。"

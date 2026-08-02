@@ -7,6 +7,7 @@ venv/
 # Local and generated data
 data/
 private-inbox/
+reference-materials/
 *.db
 *.sqlite
 *.sqlite3

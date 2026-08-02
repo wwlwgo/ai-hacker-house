@@ -41,12 +41,16 @@ def load_local_env(env_path: Path) -> None:
 
 def build_approved_report_package(trace_id: str, title: str, conclusion: Dict[str, Any]) -> Dict[str, Any]:
     """Return the sole data payload allowed to leave the Relay for report drafting."""
+    facts = conclusion.get("approved_facts", conclusion.get("confirmed_facts", []))
+    conclusion_text = conclusion.get("approved_conclusion", conclusion.get("proposed_conclusion", ""))
+    if not facts or not conclusion_text or not conclusion.get("evidence_refs"):
+        raise ValueError("Approved report package requires approved facts, conclusion, and evidence")
     return {
         "trace_id": trace_id,
         "title": title,
         "approval_context": "总监 Human Adapter 已批准该拟定结论仅用于生成内部演示报告草稿。",
-        "confirmed_facts": list(conclusion["confirmed_facts"]),
-        "proposed_conclusion": conclusion["proposed_conclusion"],
+        "confirmed_facts": list(facts),
+        "proposed_conclusion": conclusion_text,
         "evidence_refs": list(conclusion["evidence_refs"]),
     }
 

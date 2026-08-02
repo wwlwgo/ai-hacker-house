@@ -44,8 +44,11 @@ class LiveReportTests(unittest.TestCase):
         self.assertEqual(self.relay.case.report_source, "真实 LLM")
         self.assertEqual(package["trace_id"], self.relay.case.trace_id)
         self.assertIn("总监 Human Adapter 已批准", package["approval_context"])
-        self.assertNotIn("human_correction", serialized)
-        self.assertNotIn("verification.requested", serialized)
+        self.assertNotIn("challenge.raised", serialized)
+        self.assertNotIn("rejected", serialized)
+        self.assertNotIn("pending", serialized)
+        self.assertNotIn("照片外观可单独证明", serialized)
+        self.assertNotIn("通信专业台账可证明", serialized)
         self.assertNotIn("messages", package)
         self.assertNotIn("timeline", package)
 
@@ -72,7 +75,11 @@ class LiveReportTests(unittest.TestCase):
         self.assertIn("未配置", self.relay.case.report_fallback_reason)
 
     def test_empty_api_content_is_rejected(self):
-        package = build_approved_report_package("t-1", "事项", {"confirmed_facts": [], "proposed_conclusion": "结论", "evidence_refs": []})
+        package = build_approved_report_package(
+            "t-1",
+            "事项",
+            {"approved_facts": ["已批准事实"], "approved_conclusion": "已批准结论", "evidence_refs": ["ev-01"]},
+        )
         response = {"choices": [{"message": {"content": "   "}}]}
         with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "sk-test"}, clear=False):
             with patch("src.reporting.llm.urlopen", return_value=_FakeResponse(json.dumps(response))):

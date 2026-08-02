@@ -82,6 +82,7 @@ def message_summary(message) -> str:
 def event_label(message) -> str:
     labels = {
         "human.correction": "人工纠偏",
+        "human.decision": "总监裁决 / 待批准",
         "conclusion.proposed": "拟定结论 / 待人工确认",
         "human.approval": "总监批准",
         "report.drafted": "报告草稿",
@@ -175,8 +176,8 @@ with timeline_column:
         special_marker = ""
         if message.event_type == "human.correction":
             special_marker = " [人工介入]"
-        elif message.event_type == "conclusion.proposed":
-            special_marker = " [待人工确认]"
+        elif message.event_type in ("conclusion.proposed", "human.decision"):
+            special_marker = " [人工裁决]" if message.event_type == "human.decision" else " [待人工确认]"
         if special_marker:
             label = "{0} |{1} | {2} -> {3} | {4}".format(
                 prefix, special_marker, sender, receiver, event_label(message)

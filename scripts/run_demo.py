@@ -28,21 +28,28 @@ def main() -> None:
     print_status(relay, "重置案例 / Round 0")
 
     relay.run_round_1()
-    print_status(relay, "Round 1：并行专业核查")
+    print_status(relay, "Round 1：总监指令、双专业初判与专业质疑")
 
     relay.apply_human_correction()
     print_status(relay, "Human Adapter：人工纠偏")
 
     relay.run_round_2()
-    print_status(relay, "Round 2：定向澄清与拟定结论")
-    print("\n拟定结论：")
-    print(json.dumps(relay.case.proposed_conclusion, ensure_ascii=False, indent=2))
+    print_status(relay, "Round 2：跨专业核对、补证与总监裁决")
+    print("\n事件序列：")
+    for message in relay.case.messages:
+        print("- R{0} | {1} -> {2} | {3}".format(
+            message.round, message.sender.role, message.receiver.role, message.event_type
+        ))
+    print("\n结论裁决台账：")
+    for item in relay.case.decision_ledger:
+        print("- [{0}] {1}".format(item["status"], item["decision_item"]))
+    print("\n待批准结论包：")
+    print(json.dumps(relay.case.pending_conclusion_package, ensure_ascii=False, indent=2))
 
     relay.approve_by_director()
     print_status(relay, "总监批准并生成报告")
-
-    print("\n完整结构化时间线：")
-    print(json.dumps(relay.timeline_as_dicts(), ensure_ascii=False, indent=2))
+    print("\n已批准结论包：")
+    print(json.dumps(relay.case.approved_conclusion_package, ensure_ascii=False, indent=2))
     print("\nMarkdown 报告草稿：\n")
     print(relay.case.report_draft)
 

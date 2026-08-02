@@ -48,6 +48,9 @@ class RelayCase:
     current_round: int = 0
     messages: List[Message] = field(default_factory=list)
     proposed_conclusion: Optional[Dict[str, Any]] = None
+    decision_ledger: List[Dict[str, Any]] = field(default_factory=list)
+    pending_conclusion_package: Optional[Dict[str, Any]] = None
+    approved_conclusion_package: Optional[Dict[str, Any]] = None
     report_draft: Optional[str] = None
     report_source: Optional[str] = None
     report_fallback_reason: Optional[str] = None
