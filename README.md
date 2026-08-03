@@ -39,6 +39,7 @@ MVP 只在本地单机运行，使用 Mock 节点和脱敏 fixtures。它不接�
 - [Demo 交互与演示设计](docs/Demo-交互与演示设计.md)：建议的观察面板和降级展示。
 - [Demo 演示脚本](docs/Demo-演示脚本.md)：3 至 5 分钟现场演示步骤。
 - [3 分钟路演稿](docs/Pitch-3分钟.md)：最终展示的讲稿。
+- [参赛复盘](docs/参赛复盘-Ship-it-Sunday-Agent-Relay.md)：首次参加 Ship it Sunday 的项目、交流与路演复盘。
 - [未来演进](docs/未来演进.md)：异构 Agent、多节点和渠道 Adapter 的后续方向。
 - [前端与产品协作任务书](docs/前端-产品协作任务书.md)：可直接给前端/产品伙伴的页面、交互和分工说明。
 - [场景矩阵与扩展路线](docs/场景矩阵与扩展路线.md)：第二工作流、Skill 资产与六小时扩展决策门。
