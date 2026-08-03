@@ -42,6 +42,18 @@ MVP 只在本地单机运行，使用 Mock 节点和脱敏 fixtures。它不接�
 
 左图展示专业初判、质疑和 Relay 中介的跨专业核对；右图展示总监对结论的采纳、排除和待补充裁决，只有已采纳项会进入报告结论包。
 
+## 现场记录
+
+本项目在 Ship it Sunday @ AI Hacker House 现场完成。以下照片保留活动与协作氛围，参与者面部均已作卡通化遮挡。
+
+<p>
+  <img src="assets/event/ship-it-sunday-venue-wall-redacted.jpg" alt="Ship it Sunday 与 AI Hacker House 活动墙现场" width="66%" />
+</p>
+
+<p>
+  <img src="assets/event/ship-it-sunday-collaboration-redacted.jpg" alt="Ship it Sunday 现场协作与开发状态，参与者面部已遮挡" width="66%" />
+</p>
+
 ## 仓库导航
 
 - [今晚工作计划](今晚工作计划.md)：今晚和明天的范围、技术选择与验收标准。
@@ -49,6 +61,7 @@ MVP 只在本地单机运行，使用 Mock 节点和脱敏 fixtures。它不接�
 - [MVP 技术设计](docs/MVP-技术设计.md)：架构、协议、状态机和角色边界。
 - [Demo 交互与演示设计](docs/Demo-交互与演示设计.md)：建议的观察面板和降级展示。
 - [Demo 演示脚本](docs/Demo-演示脚本.md)：3 至 5 分钟现场演示步骤。
+- [3 分钟路演 PPT](docs/工程协同AgentRelay-3分钟路演.pptx)：Ship it Sunday 现场展示所用的完整路演材料。
 - [3 分钟路演稿](docs/Pitch-3分钟.md)：最终展示的讲稿。
 - [参赛复盘](docs/参赛复盘-Ship-it-Sunday-Agent-Relay.md)：首次参加 Ship it Sunday 的项目、交流与路演复盘。
 - [未来演进](docs/未来演进.md)：异构 Agent、多节点和渠道 Adapter 的后续方向。
