@@ -31,6 +31,17 @@ MVP 只在本地单机运行，使用 Mock 节点和脱敏 fixtures。它不接�
 - Agent 可以推进任务，人可以随时补充、纠正、暂停、退回或批准。
 - 高风险结论和正式对外交付始终由人确认。
 
+## 界面预览
+
+协同指挥台将多轮专业消息、Relay 中介的跨专业核对和 Human Adapter 的裁决留在同一条可追溯链中。
+
+<p>
+  <img src="assets/screenshots/relay-timeline.png" alt="工程协同 Agent Relay 的多轮协同消息时间线" width="49%" />
+  <img src="assets/screenshots/relay-decision-ledger.png" alt="工程协同 Agent Relay 的总监裁决台账与待批准结论包" width="49%" />
+</p>
+
+左图展示专业初判、质疑和 Relay 中介的跨专业核对；右图展示总监对结论的采纳、排除和待补充裁决，只有已采纳项会进入报告结论包。
+
 ## 仓库导航
 
 - [今晚工作计划](今晚工作计划.md)：今晚和明天的范围、技术选择与验收标准。
