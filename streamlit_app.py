@@ -101,7 +101,10 @@ with right:
         st.success("已排除与待补充项不会进入报告或真实 LLM 请求。")
     if case.report_draft:
         st.divider(); st.markdown("#### Markdown 报告草稿")
-        st.success("报告来源：真实 LLM。仅读取已批准结论包。") if case.report_source == "真实 LLM" else st.info("报告来源：Mock 回退。" + (case.report_fallback_reason or ""))
+        if case.report_source == "真实 LLM":
+            st.success("报告来源：真实 LLM。仅读取已批准结论包。")
+        else:
+            st.info("报告来源：Mock 回退。" + (case.report_fallback_reason or ""))
         if st.button("重新演示", key="reset_from_report", use_container_width=True): run_action(relay, relay.reset_case)
         st.markdown(case.report_draft)
 

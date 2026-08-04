@@ -31,6 +31,8 @@ with sync_playwright() as p:
     status(page, "REPORT_DRAFTED")
     expect(page.get_by_text("已批准结论包 · Report Agent 的唯一输入", exact=True)).to_be_visible()
     expect(page.get_by_text("报告来源：", exact=False).first).to_be_visible()
+    expect(page.get_by_text("DeltaGenerator", exact=False)).not_to_be_visible()
+    expect(page.get_by_text('st.success("报告来源：', exact=False)).not_to_be_visible()
     page.screenshot(path="/tmp/agent-relay-approved.png", full_page=True)
     page.get_by_role("button", name="重置案例", exact=True).first.click()
     status(page, "NEW")
