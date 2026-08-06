@@ -36,22 +36,27 @@ MVP 只在本地单机运行，使用 Mock 节点和脱敏 fixtures。它不接�
 协同指挥台将多轮专业消息、Relay 中介的跨专业核对和 Human Adapter 的裁决留在同一条可追溯链中。
 
 <p>
-  <img src="assets/screenshots/relay-timeline.png" alt="工程协同 Agent Relay 的多轮协同消息时间线" width="49%" />
-  <img src="assets/screenshots/relay-decision-ledger.png" alt="工程协同 Agent Relay 的总监裁决台账与待批准结论包" width="49%" />
+  <img src="assets/screenshots/relay-timeline.png" alt="工程协同 Agent Relay 的多轮协同消息时间线" width="82%" />
 </p>
 
-左图展示专业初判、质疑和 Relay 中介的跨专业核对；右图展示总监对结论的采纳、排除和待补充裁决，只有已采纳项会进入报告结论包。
+<p>
+  <img src="assets/screenshots/relay-decision-ledger.png" alt="工程协同 Agent Relay 的总监裁决台账与待批准结论包" width="82%" />
+</p>
+
+第一张展示专业初判、质疑和 Relay 中介的跨专业核对；第二张展示总监对结论的采纳、排除和待补充裁决，只有已采纳项会进入报告结论包。
 
 ## 现场记录
 
-本项目在 Ship it Sunday @ AI Hacker House 现场完成。以下照片保留活动与协作氛围，参与者面部均已作卡通化遮挡。
+本项目在 Ship it Sunday @ AI Hacker House 现场完成。主图记录项目路演；协作现场照片中的其他参与者面部已作卡通化遮挡。
 
 <p>
-  <img src="assets/event/ship-it-sunday-venue-wall-redacted.jpg" alt="Ship it Sunday 与 AI Hacker House 活动墙现场" width="66%" />
+  <img src="assets/event/ship-it-sunday-pitch-main.jpg" alt="项目作者在 Ship it Sunday 现场路演工程协同 Agent Relay" width="48%" />
+  <img src="assets/event/ship-it-sunday-pitch-screen.jpg" alt="工程协同 Agent Relay 的现场路演屏幕" width="48%" />
 </p>
 
 <p>
-  <img src="assets/event/ship-it-sunday-collaboration-redacted.jpg" alt="Ship it Sunday 现场协作与开发状态，参与者面部已遮挡" width="66%" />
+  <img src="assets/event/ship-it-sunday-venue-exterior.jpg" alt="Ship it Sunday 活动场地入口" width="48%" />
+  <img src="assets/event/ship-it-sunday-collaboration-redacted.jpg" alt="Ship it Sunday 现场协作与开发状态，参与者面部已遮挡" width="48%" />
 </p>
 
 ## 仓库导航
